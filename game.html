@@ -1,0 +1,123 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <style>
+            #c{
+                border: 1px solid;
+                width: 10px;
+                height: 10px;
+                image-rendering: pixelated;
+                image-rendering: crisp-edges;
+                image-rendering: -moz-crisp-edges;
+            }
+        </style>
+    </head>
+    <body onload="start(); refresh_block();">
+        <canvas id="c"></canvas><br>
+        Pontuação: <span id="pontuacao">0</span>
+        <script>
+            canvas = document.getElementById("c");
+            canvas.style.height = '90vh'
+            canvas.style.width = '90vw'
+            console.log(canvas.width)
+            console.log(canvas.height)
+            ctx = canvas.getContext("2d")
+            player = {
+                pos_x: 0,
+                pos_y: 0,
+                size: 10,
+                velocity: 10,
+                color: "#1a75ff",
+                'ArrowUp': up_move,
+                'ArrowDown': down_move,
+                'ArrowRight': right_move,
+                'ArrowLeft': left_move,
+                draw: function(){
+                    ctx.fillStyle = this['color']
+                    ctx.fillRect(this['pos_x'], this['pos_y'], this['size'], this['size'])
+                }
+            }
+
+            block = {
+                pos_x: -10,
+                pos_y: -10,
+                size: 10,
+                color: "#009900",
+                draw: function(){
+                    ctx.fillStyle = this['color']
+                    ctx.fillRect(this['pos_x'], this['pos_y'], this['size'], this['size'])
+                }
+            }
+
+            game = {
+                pontuacao: 0
+            }
+
+            function start(){
+                ctx.fillStyle = "#fff"
+                ctx.fillRect(0, 0, canvas.width, canvas.height)
+                player.draw()
+                block.draw()
+                colision_detect()
+
+                window.requestAnimationFrame(start)
+            }
+
+            function right_move(){
+                if(player['pos_x'] < canvas.width - player['size']){
+                    player['pos_x'] += player['velocity']
+                }else{
+                    player['pos_x'] = canvas.width - player['size']
+                }
+            }
+
+            function up_move(){
+                if(player['pos_y'] > 0){
+                    player['pos_y'] -= player['velocity']
+                }else{
+                    player['pos_y'] = 0
+                }
+            }
+
+            function left_move(){
+                if(player['pos_x'] > 0){
+                    player['pos_x'] -= player['velocity']
+                }else{
+                    player['pos_x'] = 0
+                }
+            }
+
+            function down_move(){
+                if(player['pos_y'] < canvas.height - player['size']){
+                    player['pos_y'] += player['velocity']
+                }else{
+                    player['pos_y'] = canvas.height - player['size']
+                }
+            }
+
+            function refresh_block(){
+                do{
+                    block['pos_x'] = Math.floor(Math.random()*(canvas.width - 10))
+                }while(block['pos_x']%10 != 0)
+
+                do{
+                    block['pos_y'] = Math.floor(Math.random()*(canvas.height - 10))
+                }while(block['pos_y']%10 != 0)
+            }
+
+            function colision_detect(){
+                if (player['pos_x'] == block['pos_x'] && player['pos_y'] == block['pos_y']){
+                    refresh_block()
+                    game['pontuacao']++
+                    document.getElementById('pontuacao').innerHTML = game['pontuacao']
+                }
+            }
+
+            document.addEventListener("keydown", function(e){
+                if(player[e.key]){
+                    player[e.key]()
+                }
+            })
+            </script>
+    </body>
+</html>
