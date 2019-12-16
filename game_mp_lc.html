@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<style>
+        #c{
+            border: 1px solid;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            image-rendering: -moz-crisp-edges;
+        }
+    </style>
+</head>
+<body onload="init();">
+	<canvas id="c" width="900" height="450"></canvas><br>
+    Tempo: <span id="tempo">60</span><br>
+    Score:<br>
+    <b>Player 1</b> - <span id="score_p1">0</span> : <b>Player 2</b> - <span id="score_p2">0</span><br><br>
+    <a href="game.html">Voltar</a>
+    <script type="text/javascript" src="game_mp_lc.js"></script>
+</body>
+</html>
