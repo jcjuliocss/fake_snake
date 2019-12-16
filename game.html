@@ -1,162 +1,20 @@
 <html>
-    <head>
-        <meta charset="utf-8"/>
-        <style>
-            #c{
-                border: 1px solid;
-                image-rendering: pixelated;
-                image-rendering: crisp-edges;
-                image-rendering: -moz-crisp-edges;
-            }
-        </style>
-    </head>
-    <body onload="init();">
-        <canvas id="c" width="900" height="450"></canvas><br>
-        Tempo: <span id="tempo">60</span><br>
-        Pontuação: <span id="score">0</span>
-        <script>
-            canvas = document.getElementById("c");
-            console.log(canvas.width)
-            console.log(canvas.height)
-            ctx = canvas.getContext("2d")
-            player = {
-                pos_x: 0,
-                pos_y: 0,
-                size: 30,
-                velocity: 30,
-                color: "#000099",
-                'ArrowUp': up_move,
-                'ArrowDown': down_move,
-                'ArrowRight': right_move,
-                'ArrowLeft': left_move,
-                draw: function(){
-                    ctx.fillStyle = this['color']
-                    ctx.fillRect(this['pos_x'], this['pos_y'], this['size'], this['size'])
-                }
-            }
-
-            block = {
-                pos_x: -10,
-                pos_y: -10,
-                size: 30,
-                color: "#ffcc00",
-                draw: function(){
-                    ctx.fillStyle = this['color']
-                    ctx.fillRect(this['pos_x'], this['pos_y'], this['size'], this['size'])
-                }
-            }
-
-            game = {
-                score: 0,
-                time: 60,
-                over: false,
-                keys_pressed: 0
-            }
-
-            function init(){
-                player.draw()
-                refresh_block()
-                block.draw()
-            }
-
-            function start(){
-                ctx.fillStyle = "#fff"
-                ctx.fillRect(0, 0, canvas.width, canvas.height)
-                player.draw()
-                block.draw()
-                colision_detect()
-
-                refresh()
-            }
-
-            function refresh(){
-                if(!game['over']){
-                    window.requestAnimationFrame(start)
-                }else{
-                    draw_game_over()
-                }
-            }
-
-            function refresh_time(){
-                loop = setInterval(function(){
-                    game['time']--
-                    document.getElementById("tempo").innerHTML = game['time']
-                    if(game['time'] <= 0){
-                        game['over'] = true
-                        clearInterval(loop)
-                    }
-                }, 1000)
-            }
-
-            function draw_game_over(){
-                ctx.fillStyle = "#000"
-                ctx.font = "40px serif"
-                ctx.fillText("Game Over!", canvas.width/2.5, canvas.height/2)
-                ctx.fillText("Score: " + game['score'], canvas.width/2.5, canvas.height/1.7)
-            }
-
-            function right_move(){
-                if(player['pos_x'] < canvas.width - player['size']){
-                    player['pos_x'] += player['velocity']
-                }else{
-                    player['pos_x'] = canvas.width - player['size']
-                }
-            }
-
-            function up_move(){
-                if(player['pos_y'] > 0){
-                    player['pos_y'] -= player['velocity']
-                }else{
-                    player['pos_y'] = 0
-                }
-            }
-
-            function left_move(){
-                if(player['pos_x'] > 0){
-                    player['pos_x'] -= player['velocity']
-                }else{
-                    player['pos_x'] = 0
-                }
-            }
-
-            function down_move(){
-                if(player['pos_y'] < canvas.height - player['size']){
-                    player['pos_y'] += player['velocity']
-                }else{
-                    player['pos_y'] = canvas.height - player['size']
-                }
-            }
-
-            function refresh_block(){
-                do{
-                    block['pos_x'] = Math.floor(Math.random()*(canvas.width - 10))
-                }while(block['pos_x']%block['size'] != 0)
-
-                do{
-                    block['pos_y'] = Math.floor(Math.random()*(canvas.height - 10))
-                }while(block['pos_y']%block['size'] != 0)
-            }
-
-            function colision_detect(){
-                if (player['pos_x'] == block['pos_x'] && player['pos_y'] == block['pos_y']){
-                    refresh_block()
-                    game['score']++
-                    game['time']++
-                    document.getElementById("tempo").innerHTML = game['time']
-                    document.getElementById('score').innerHTML = game['score']
-                }
-            }
-
-            document.addEventListener("keydown", function(e){
-                if(game['keys_pressed'] == 0){
-                    start()
-                    refresh_time()
-                    game['keys_pressed']++
-                }
-                if(player[e.key]){
-                    player[e.key]()
-                }
-            })
-            </script>
-    </body>
+<head>
+    <meta charset="utf-8"/>
+    <style>
+        #c{
+            border: 1px solid;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            image-rendering: -moz-crisp-edges;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center;">
+        <a href="game_sp.html">Single-player</a><br>
+        <a href="game_mp_lc.html">Multi-player Local</a>
+    </div>
+    <script type="text/javascript" src="game_mp_lc.js"></script>
+</body>
 </html>
