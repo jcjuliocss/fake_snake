@@ -79,34 +79,34 @@ function draw_game_over(){
 }
 
 function right_move(){
-    if(player['pos_x'] < canvas.width - player['size']){
-        player['pos_x'] += player['velocity']
+    if(this['pos_x'] < canvas.width - this['size']){
+        this['pos_x'] += this['velocity']
     }else{
-        player['pos_x'] = canvas.width - player['size']
+        this['pos_x'] = canvas.width - this['size']
     }
 }
 
 function up_move(){
-    if(player['pos_y'] > 0){
-        player['pos_y'] -= player['velocity']
+    if(this['pos_y'] > 0){
+        this['pos_y'] -= this['velocity']
     }else{
-        player['pos_y'] = 0
+        this['pos_y'] = 0
     }
 }
 
 function left_move(){
-    if(player['pos_x'] > 0){
-        player['pos_x'] -= player['velocity']
+    if(this['pos_x'] > 0){
+        this['pos_x'] -= this['velocity']
     }else{
-        player['pos_x'] = 0
+        this['pos_x'] = 0
     }
 }
 
 function down_move(){
-    if(player['pos_y'] < canvas.height - player['size']){
-        player['pos_y'] += player['velocity']
+    if(this['pos_y'] < canvas.height - this['size']){
+        this['pos_y'] += this['velocity']
     }else{
-        player['pos_y'] = canvas.height - player['size']
+        this['pos_y'] = canvas.height - this['size']
     }
 }
 
